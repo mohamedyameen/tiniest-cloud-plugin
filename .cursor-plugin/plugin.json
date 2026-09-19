@@ -7,8 +7,17 @@
     "email": "support@tiniest.cloud"
   },
   "homepage": "https://tiniest.cloud",
+  "repository": "https://github.com/mohamedyameen/tiniest-cloud-plugin",
   "license": "MIT",
-  "keywords": ["deploy", "hosting", "static-site", "auth", "storage", "ai", "mcp"],
+  "keywords": [
+    "deploy",
+    "hosting",
+    "static-site",
+    "auth",
+    "storage",
+    "ai",
+    "mcp"
+  ],
   "logo": "assets/logo.png",
   "skills": "./skills/",
   "mcpServers": "./mcp.json"

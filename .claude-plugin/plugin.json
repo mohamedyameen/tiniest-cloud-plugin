@@ -8,8 +8,17 @@
     "url": "https://tiniest.cloud"
   },
   "homepage": "https://tiniest.cloud",
+  "repository": "https://github.com/mohamedyameen/tiniest-cloud-plugin",
   "license": "MIT",
-  "keywords": ["deploy", "hosting", "static-site", "auth", "storage", "ai", "mcp"],
+  "keywords": [
+    "deploy",
+    "hosting",
+    "static-site",
+    "auth",
+    "storage",
+    "ai",
+    "mcp"
+  ],
   "mcpServers": {
     "tiniest-cloud": {
       "type": "http",

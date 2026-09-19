@@ -20,7 +20,7 @@ This plugin adds two things:
 
 **Claude Code:**
 
-    /plugin marketplace add <owner>/tiniest-cloud-plugin
+    /plugin marketplace add mohamedyameen/tiniest-cloud-plugin
     /plugin install tiniest-cloud@tiniest-cloud
 
 The first time the agent uses a Tiniest Cloud tool, your browser opens to sign in (or create a
