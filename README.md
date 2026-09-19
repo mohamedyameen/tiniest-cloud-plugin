@@ -23,6 +23,16 @@ This plugin adds two things:
     /plugin marketplace add mohamedyameen/tiniest-cloud-plugin
     /plugin install tiniest-cloud@tiniest-cloud
 
+**Gemini CLI:**
+
+    gemini extensions install https://github.com/mohamedyameen/tiniest-cloud-plugin
+
+Then run `/mcp auth tiniest-cloud` inside Gemini CLI to sign in.
+
+**Cline, or any other MCP client:** add the server `https://app.tiniest.cloud/mcp`
+(Streamable HTTP). Step-by-step setup, including a token fallback, is in
+[llms-install.md](llms-install.md).
+
 The first time the agent uses a Tiniest Cloud tool, your browser opens to sign in (or create a
 free account). There is no API key to paste.
 
