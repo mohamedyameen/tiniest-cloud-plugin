@@ -1,0 +1,17 @@
+{
+  "name": "tiniest-cloud",
+  "owner": {
+    "name": "Tiniest Cloud",
+    "email": "support@tiniest.cloud"
+  },
+  "metadata": {
+    "description": "Tiniest Cloud's plugin: deploy web apps with sign-in, storage and AI built in."
+  },
+  "plugins": [
+    {
+      "name": "tiniest-cloud",
+      "source": "./",
+      "description": "Deploy web apps to Tiniest Cloud, with sign-in, storage and AI built in."
+    }
+  ]
+}
