@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "tiniest-cloud": {
+      "url": "https://app.tiniest.cloud/mcp"
+    }
+  }
+}
