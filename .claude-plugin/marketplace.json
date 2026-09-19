@@ -1,5 +1,6 @@
 {
   "name": "tiniest-cloud",
+  "description": "Tiniest Cloud's plugin: deploy web apps with sign-in, storage and AI built in.",
   "owner": {
     "name": "Tiniest Cloud",
     "email": "support@tiniest.cloud"
