@@ -1,7 +1,7 @@
 {
   "name": "tiniest-cloud",
   "displayName": "Tiniest Cloud",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Deploy web apps to Tiniest Cloud from the conversation. Every app gets sign-in, per-user storage, realtime, push notifications, scheduled jobs and an AI model, with no keys and no backend to write.",
   "author": {
     "name": "Tiniest Cloud",
@@ -9,6 +9,7 @@
     "url": "https://tiniest.cloud"
   },
   "homepage": "https://tiniest.cloud",
+  "privacyPolicyUrl": "https://tiniest.cloud/privacy",
   "repository": "https://github.com/mohamedyameen/tiniest-cloud-plugin",
   "license": "MIT",
   "keywords": [
