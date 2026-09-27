@@ -28,8 +28,10 @@ So: `tiny_guide`, then build, then `deploy`.
 These four hold regardless of which version of the SDK is current, and they are the ones an
 agent gets wrong when it treats this like ordinary static hosting:
 
-- **Build a plain static site.** HTML, CSS and JavaScript. No build step is required and no
-  server code runs. Include `index.html` at the top level.
+- **Build a static frontend.** Plain HTML, CSS and JavaScript, or a framework's build output
+  (a React or Astro project's `dist/`). No server code runs. Deploy the folder with
+  `index.html` at its top level. With a shell, a new one starts from
+  `npm create tiniest-cloud@latest <folder>` (add `-- --template site` for a website).
 - **Do not write a login flow.** Sign-in belongs to the platform. The SDK tells you who the
   visitor is; there are no passwords, sessions or tokens for the app to handle.
 - **Do not use `localStorage` for anything that matters.** It is per-browser and per-device,

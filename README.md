@@ -10,9 +10,15 @@ This plugin adds two things:
   folder and get a live URL, share an app by email, roll back to an earlier version, connect a
   third-party API without putting its key in the page, schedule recurring work, and put an app
   on your own domain, and read or change the data an app has saved.
-- **The `tiny` skill**, which tells Claude how to build for the platform — a plain static
-  site using the `tiny` SDK, no login flow, no `localStorage`, no backend — and to fetch the
+- **The `tiny` skill**, which tells Claude how to build for the platform — a static frontend
+  using the `tiny` SDK, no login flow, no `localStorage`, no backend — and to fetch the
   current SDK reference with the `tiny_guide` tool before it starts.
+
+Starting from scratch in a terminal, one command makes a project already set up for Tiniest
+Cloud — React, TypeScript, Vite, Tailwind CSS and shadcn/ui for an app, or Astro for a website:
+
+    npm create tiniest-cloud@latest my-app
+    npm create tiniest-cloud@latest my-site -- --template site
 
 ## Install
 
