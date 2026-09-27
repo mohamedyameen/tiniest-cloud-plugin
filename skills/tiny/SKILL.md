@@ -29,16 +29,17 @@ These four hold regardless of which version of the SDK is current, and they are 
 agent gets wrong when it treats this like ordinary static hosting:
 
 - **Build a static frontend.** Plain HTML, CSS and JavaScript, or a framework's build output
-  (a React or Astro project's `dist/`). No server code runs. Deploy the folder with
-  `index.html` at its top level. With a shell, a new one starts from
+  (a React or Astro project's `dist/`), with `index.html` at the top level of what you deploy. With a shell, a new one starts from
   `npm create tiniest-cloud@latest <folder>` (add `-- --template site` for a website).
 - **Do not write a login flow.** Sign-in belongs to the platform. The SDK tells you who the
   visitor is; there are no passwords, sessions or tokens for the app to handle.
 - **Do not use `localStorage` for anything that matters.** It is per-browser and per-device,
   so the same person loses their data on their phone. Storage in the SDK follows the account.
-- **Do not add a backend or call your own API.** There is no origin to call. Anything that
-  needs a secret goes through a connection the app's owner declares, so the key never reaches
-  the page.
+- **Do not add a server of your own or call your own API.** There is no origin to call. Logic
+  users must not be able to change runs as a backend function: a file in the deployed
+  `_functions/` folder (`public/_functions/` in the starters), called from the page with
+  `tiny.call`. Anything that needs a secret goes through a connection the app's owner declares,
+  so the key never reaches the page or the function's code.
 
 ## Deploying
 

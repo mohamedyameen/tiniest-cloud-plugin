@@ -11,7 +11,8 @@ This plugin adds two things:
   third-party API without putting its key in the page, schedule recurring work, and put an app
   on your own domain, and read or change the data an app has saved.
 - **The `tiny` skill**, which tells Claude how to build for the platform — a static frontend
-  using the `tiny` SDK, no login flow, no `localStorage`, no backend — and to fetch the
+  using the `tiny` SDK, no login flow, no `localStorage`, no server of its own (server logic
+  goes in backend functions) — and to fetch the
   current SDK reference with the `tiny_guide` tool before it starts.
 
 Starting from scratch in a terminal, one command makes a project already set up for Tiniest
