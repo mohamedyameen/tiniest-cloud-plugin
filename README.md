@@ -20,6 +20,12 @@ This plugin adds two things:
   dashboards, presentations and forms. When you have design standards of your own (a design
   system, components, a brand guide), those come first.
 
+Using another agent? The skills install anywhere the skills CLI reaches:
+
+    npx skills add mohamedyameen/tiniest-cloud-plugin
+
+and Gemini CLI loads `GEMINI.md` with the extension.
+
 Starting from scratch in a terminal, one command makes a project already set up for Tiniest
 Cloud — React, TypeScript, Vite, Tailwind CSS and shadcn/ui for an app, or Astro for a website:
 
