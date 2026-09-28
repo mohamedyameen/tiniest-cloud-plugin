@@ -14,6 +14,11 @@ This plugin adds two things:
   using the `tiny` SDK, no login flow, no `localStorage`, no server of its own (server logic
   goes in backend functions) — and to fetch the
   current SDK reference with the `tiny_guide` tool before it starts.
+- **The `tiny-design` skill**, which tells Claude how what it builds should look: a direction
+  chosen for the product and its industry, its own palette and type, balanced screens, quick
+  purposeful motion, light and dark, and a checklist — with a playbook each for apps, websites,
+  dashboards, presentations and forms. When you have design standards of your own (a design
+  system, components, a brand guide), those come first.
 
 Starting from scratch in a terminal, one command makes a project already set up for Tiniest
 Cloud — React, TypeScript, Vite, Tailwind CSS and shadcn/ui for an app, or Astro for a website:
