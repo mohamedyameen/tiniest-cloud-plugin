@@ -5,6 +5,30 @@
 A tracker, a CRM, an inventory, a booking tool: people come back to it, often daily, to do the
 same few things. It should feel fast, calm and obvious; the design serves the task.
 
+## Layout — screen by screen, for what it holds
+
+The starter's frame (a header over one content area) is a placeholder. Choose each screen's
+layout from what is on it:
+
+- **Several areas to move between** (a CRM, an admin, the "manage" side of anything): a
+  sidebar with the areas and the content beside it using the width. shadcn's sidebar
+  (`npx shadcn@latest add sidebar`) collapses to a sheet on a phone.
+- **Things people browse by how they look** (recipes, products, photos, boards, courses): a
+  grid of cards that fills the row — `grid gap-4 grid-cols-[repeat(auto-fill,minmax(16rem,1fr))]`
+  — each card led by its image or its most telling detail, not a title over three grey lines.
+- **Records compared by their fields** (contacts, orders, expenses, bookings): a table with
+  sortable columns on a laptop, the same rows as a list on a phone.
+- **A queue worked through** (requests, tickets, submissions, an inbox): the list with the
+  selected item's detail beside it on a wide screen (`lg:grid-cols-[22rem_1fr]`), the detail
+  its own screen on a phone.
+- **Stages** (a pipeline, tasks by status): columns side by side that scroll sideways.
+- **One focused task** (answering a question, a checkout step, a long form, reading): a
+  centred column (`mx-auto max-w-xl`) — the one place a narrow column is right.
+
+One app mixes them: a quiz is played in a centred column and managed in a wide workspace with
+a table of players. On a laptop use the width — content up to about 1280–1440px — and keep a
+phone-width column for the screens that are one task; anywhere else it reads as unfinished.
+
 ## Shape
 
 - **Open on the work.** The first screen is the thing people do most — the list with a way to
@@ -40,4 +64,4 @@ same few things. It should feel fast, calm and obvious; the design serves the ta
 - The main action is always one tap away, including on a phone (a sticky button if needed).
 - Signed out, signing in, loading, empty, error and "no access" each look intentional.
 - Status colours mean the same thing everywhere; nothing relies on colour alone.
-- Then the general checklist in the design guide.
+- Then the general checklist, "Before you call it done".

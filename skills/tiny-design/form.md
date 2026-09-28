@@ -38,4 +38,4 @@ ask only for what you will use.
 - It can be completed on a phone with one thumb, with the keyboard never covering the field.
 - Every error can be understood without seeing colour.
 - Nothing is asked twice, and nothing is asked that is not used.
-- Then the general checklist in the design guide.
+- Then the general checklist, "Before you call it done".

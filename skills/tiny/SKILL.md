@@ -117,8 +117,9 @@ in both themes.
 UI) instead of one chosen for the job; purple-to-blue gradients, glassy cards and glowing blobs
 as decoration; a card around everything, cards inside cards; an icon in a rounded square above
 every heading, emoji standing in for icons; grey text on a coloured background, pure black and
-untinted greys; every section centred and every list the same three-card grid; bouncy or slow
-animation and everything fading in on load.
+untinted greys; every section centred, every screen a narrow column in the middle of a wide
+display, and every list the same three-card grid; bouncy or slow animation and everything
+fading in on load.
 
 **Type and spacing do most of the work.** One typeface family for an app, chosen for its
 character and self-hosted with its `@fontsource` package (a display face for headings suits a
@@ -127,6 +128,17 @@ where size and weight carry the hierarchy, not colour. Numbers in columns use `t
 Space on one scale (Tailwind's 4px steps): related things close together, groups clearly apart,
 generous padding at the page edge. Lines of text around 60–75 characters. Align everything to
 the same few edges.
+
+**Lay out each screen for what it holds.** A narrow centred column is right for one focused
+task — answering a question, a checkout step, a long form, an article — and wrong for most other
+screens, where it leaves a laptop mostly empty. Several areas to move between: a sidebar, with
+the content beside it using the width. Things people browse by how they look (recipes,
+products, photos, boards): a grid of cards that fills the row. Records compared by their fields
+(contacts, orders, expenses): a table that becomes a list on a phone. A queue worked through
+one at a time: the list with the selected item's detail beside it. Stages: columns side by
+side. One app can mix them — a quiz is played in a centred column and managed in a wide
+workspace. Cap the width where it stops being readable (about 1280–1440px for an app, 65–75
+characters for prose), not at the width of a phone. The starters' frame is a placeholder.
 
 **Balance every screen.** One primary action per screen, visually the strongest; secondary ones
 quieter (outline, ghost); destructive ones red and confirmed. Put what matters most where the eye
@@ -179,7 +191,8 @@ themes: shadows barely show in dark, so lift surfaces with a slightly lighter ba
 instead; pure black and pure white are harsh — use the palette's near-black and off-white.
 
 **Phone first.** Most people open a link on a phone: touch targets at least 44px, one column
-that widens on bigger screens, nothing reachable only by hover, inputs that bring up the right
+on a phone that becomes the screen's real layout on a wider one (the sidebar, the grid, the
+detail beside its list), nothing reachable only by hover, inputs that bring up the right
 keyboard (`type="email"`, `inputmode="numeric"`).
 
 **Words are part of the design.** Short, plain, active; a button says what it does ("Save
@@ -195,8 +208,9 @@ and at a phone's width, and fix what is off: edges that don't line up, cramped s
 that means nothing, an empty state that says nothing.
 
 **Each kind of build has its own playbook** — app, website, dashboard, presentation, form — with
-the patterns, the checks and directions by industry. Fetch it with `tiny_guide` and its
-`topic`, or read it beside this file where the design skill is installed.
+its layouts, patterns and checks. Read the one for what you are building before its first
+screen: `tiny_guide` with its `topic` returns it together with the directions by industry and
+the final checklist, and where the design skill is installed it is the file beside this one.
 
 ## The SDK
 

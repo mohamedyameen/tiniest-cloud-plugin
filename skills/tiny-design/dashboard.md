@@ -14,6 +14,9 @@ questions. Start by writing those questions down; every tile and chart answers o
   the detail table for anyone who wants the rows.
 - **Filters** (date range, segment) at the top, reflected in the URL so a link shows the same
   view; every tile shows its own loading skeleton while it updates.
+- **Use the screen.** A dashboard is read on a laptop first: tiles in one row
+  (`grid-cols-2 lg:grid-cols-4`), charts two across, the table full width; one column on a
+  phone.
 
 ## Numbers
 
@@ -40,4 +43,4 @@ questions. Start by writing those questions down; every tile and chart answers o
 - An empty period, one data point, and a huge value all still look right.
 - Nothing is told by colour alone; charts have text a screen reader can use.
 - A report someone will forward prints cleanly or exports (CSV from the app's data).
-- Then the general checklist in the design guide.
+- Then the general checklist, "Before you call it done".

@@ -29,7 +29,8 @@ ten words that says what it is and for whom; one primary action and at most one 
 ## Craft
 
 - Rhythm: generous vertical space between sections (80px or more on desktop), content width
-  capped (around 1100–1200px), prose narrower. Vary section treatments sparingly — a band of
+  capped (around 1100–1200px), prose narrower. Sections use that width — features side by
+  side, work or photos in a grid — rather than one narrow column all the way down. Vary section treatments sparingly — a band of
   colour, a full-bleed image — so the page has a beat without looking like a template.
 - Type can be more expressive than in an app: a display face for headlines, a calm text face
   at 17–19px with a line height around 1.6; `text-wrap: balance` on headings.
@@ -49,4 +50,4 @@ ten words that says what it is and for whom; one primary action and at most one 
 - In five seconds a stranger can say what this is, who it is for and what to do next.
 - It reads well on a phone first; tap targets are big enough and nothing scrolls sideways.
 - The page loads fast: self-hosted fonts, sized images, little JavaScript.
-- Then the general checklist in the design guide.
+- Then the general checklist, "Before you call it done".
