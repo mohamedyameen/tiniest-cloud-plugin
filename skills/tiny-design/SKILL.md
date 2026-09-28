@@ -117,6 +117,10 @@ animates its items (add `motion` from npm for layout animation). Respect reduced
 (`motion-safe:` / `motion-reduce:`). Animate only `transform` and `opacity`, name the
 properties (never `transition-all`), and prefer one orchestrated entrance to every element
 fading in on its own. No bouncing, no long delays, nothing that animates on every render.
+One exception: a moment the person earned — a right answer, a finished goal, a win in a game —
+may celebrate for up to about 500 ms, with a small overshoot or a burst, where the app's feel is
+playful (games, kids, fitness, a team event). Keep it to that moment, never in the way of the
+next action, and off under reduced motion like the rest.
 
 **Light and dark, both designed** — unless their standards settle it otherwise. Give people a
 light / dark / match-device switch, somewhere visible and styled to fit: the app starter includes one (`src/components/theme-toggle.tsx`,
@@ -203,7 +207,8 @@ apps never come out the same. Every font here is on npm as `@fontsource/<name>` 
   sit next to their field.
 - Every clickable thing has hover, pressed and visible focus states; icon-only buttons have an
   `aria-label`; a link navigates, a button acts.
-- Motion is quick, on transform and opacity only, and off under reduced motion.
+- Motion is quick (150–250 ms; up to about 500 ms only for an earned moment in a playful app),
+  on transform and opacity only, and off under reduced motion.
 - Images have width and height, alt text, and load lazily below the fold.
 - Filters, tabs and pages live in the URL, so a link opens the same view.
 - It works at 375px wide with 44px touch targets and no sideways scroll.

@@ -182,6 +182,10 @@ animates its items (add `motion` from npm for layout animation). Respect reduced
 (`motion-safe:` / `motion-reduce:`). Animate only `transform` and `opacity`, name the
 properties (never `transition-all`), and prefer one orchestrated entrance to every element
 fading in on its own. No bouncing, no long delays, nothing that animates on every render.
+One exception: a moment the person earned — a right answer, a finished goal, a win in a game —
+may celebrate for up to about 500 ms, with a small overshoot or a burst, where the app's feel is
+playful (games, kids, fitness, a team event). Keep it to that moment, never in the way of the
+next action, and off under reduced motion like the rest.
 
 **Light and dark, both designed** — unless their standards settle it otherwise. Give people a
 light / dark / match-device switch, somewhere visible and styled to fit: the app starter includes one (`src/components/theme-toggle.tsx`,

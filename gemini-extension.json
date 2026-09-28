@@ -1,6 +1,6 @@
 {
   "name": "tiniest-cloud",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Deploy web apps to Tiniest Cloud from Gemini CLI. Every app gets sign-in, per-user storage, realtime, push notifications, scheduled jobs and an AI model, with no keys and no backend to write.",
   "mcpServers": {
     "tiniest-cloud": {
