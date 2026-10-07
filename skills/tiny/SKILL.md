@@ -648,13 +648,18 @@ Apps are private to their owner until shared (`share`), or opened to anyone with
 link (`set_access` with 'link' — every signed-in visitor then gets their own data as a
 normal user; freely reversible).
 
+Every app's name carries its company: `deploy("notes", …)` in Acme's space creates
+`notes--acme`, served at notes--acme.tiniestcloud.app, so two companies can each have a
+`notes`. Later calls may use the short name (`notes`) or the full one; the deploy reply says
+the full one.
+
 A build over 2 MB (a framework's output with its images, say) is too big to pass inline. With a
 shell and a connection that has `start_upload`: zip the build folder — the one holding
 index.html, so index.html is at the top of the zip (`cd dist && zip -r ../build.zip .`) — take
 its exact size in bytes (`wc -c < build.zip`), call `start_upload`, run the curl command it
-returns, then call `deploy` with the `upload_id`. Up to 100 MB. Otherwise (a chat app, or a
+returns, then call `deploy` with the `upload_id`. Up to 40 MB. Otherwise (a chat app, or a
 connection without `start_upload`), the owner drags the folder onto the Tiniest Cloud web page,
-which takes the same 100 MB.
+which takes the same 40 MB.
 
 For teams there are spaces: `create_space` makes one, `add_member` invites people
 into it by email, and `set_space` moves an app into it — every member can open it, they get
@@ -691,6 +696,12 @@ Use the paths exactly as shown (the app starter already has them). To customise,
 `icon-512.png` / `apple-touch-icon.png` (picked up automatically), or a root
 `manifest.webmanifest` / `sw.js` to replace the generated ones — keep `start_url` and
 `scope` as `"."`. Unlike the rest of the app, the manifest and icons are served publicly.
+If this connection lists `set_icon`, give every new app an icon with it after its first deploy: a Remix Icon glyph for
+what the app is for (`wallet-3` for a budget tracker, `question-answer` for a quiz) and the
+app's main UI colour as a hex, so the icon matches the app. It shows in browser tabs, on home
+screens and on the dashboard, and replaces any shipped `icon-*.png`, `apple-touch-icon.png`
+and `favicon.ico`. An icon the owner picked on the app's Icon page stays unless they ask for a
+new one. Leave `<link rel="icon">` out of your HTML — it would decide the tab instead.
 
 ## After deploying: how to check your work
 
@@ -970,7 +981,7 @@ when a payment succeeds, a form tool when someone submits, GitHub on a push, Zap
 anything. The app needs no code to receive it:
 
     set_webhook({ slug: "crm", name: "leads", save_to: "lead:" })
-    → https://crm.tiniestcloud.app/_hook/leads/Xy3…   (the URL to paste into the other service)
+    → https://<app>.tiniestcloud.app/_hook/leads/Xy3…   (the URL to paste into the other service)
 
 Each delivery — JSON, a form, or text, up to 256 KB — is saved as one record under
 `save_to` plus a generated key that sorts by arrival (`lead:0mg4x2k1a-9f3c…`), so
