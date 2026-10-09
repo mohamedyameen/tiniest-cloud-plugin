@@ -13,9 +13,14 @@ no configuration. When building for Tiniest Cloud, build a static frontend and u
 below — do NOT use localStorage, write a login flow, or add a server of your own. Logic that
 must run where users cannot change it is a backend function (see "Server code").
 
-Some clients show only the start of this guide. Before building, call `tiny_guide` for all of
-it; before designing, call it with `topic` — `design`, `app`, `website`, `dashboard`,
-`presentation` or `form` — for how that kind of thing should look.
+Some clients show only the start of this guide. Before building, call `tiny_guide`: it returns
+what every build needs and names the other sections, and `section` returns one of them (`fetch`
+for another service's API, `jobs` for scheduled work). Before designing, call it with `topic` —
+`design`, `app`, `website`, `dashboard`, `presentation` or `form` — for how that kind of
+thing should look.
+
+Name an app by its short name (`notes`) or its full one (`notes--acme`). Work on the app the
+person means; call `list_apps` only when they ask what they have, or with `search` to find one.
 
 ## Starting a project
 
@@ -405,7 +410,7 @@ these gets a 429 with a message written for the person reading it (a spent pool 
 a pack is being added automatically or the owner needs to buy one) — show that message
 rather than a generic failure, and expect calls to resume once the owner tops up. On a team
 plan each member's OWN calls also stop at one seat's share of the pool, or at the share the
-owner set for them (`add_member` with `ai_cap`, or Settings → Members), so one colleague
+owner set for them (Settings → Members), so one colleague
 cannot spend everyone's month; that 429 names the owner as the person who can raise it.
 Visitors are not members and draw on the pool itself.
 
@@ -574,7 +579,7 @@ Spaces come in two kinds, and multi-tenant wants the second one:
           cost nothing, and see their own rows and nothing else — no dashboard, no apps.
 
 So a CRM serving Acme and Beta is ONE app in your own space, data_mode team, with a
-tenant space per customer (create_space kind='tenant'). The app lives with you; the
+tenant space per customer (made in Settings → Customers). The app lives with you; the
 customer's space partitions its rows. The kind cannot be changed later.
 
 By default every space in the account can open a team-mode app, each walled into its
@@ -641,7 +646,7 @@ Through the Tiniest Cloud MCP server:
 - `start_upload(slug, size)`, if your connection has it — for a build over 2 MB: an upload link, then `deploy(slug, upload_id)`
 - `list_apps`, `list_versions`, `rollback` — history is immutable and restorable
 - `set_webhook`, `list_webhooks`, `remove_webhook`, if your connection has them — addresses other services call (see "Receiving from other services")
-- `share`, `set_data_mode`, `create_space`, `add_member` — access and tenancy
+- `share`, `set_data_mode`, `set_space`, `set_space_access` — access and tenancy
 - `delete_app`
 
 Apps are private to their owner until shared (`share`), or opened to anyone with the
@@ -661,8 +666,8 @@ returns, then call `deploy` with the `upload_id`. Up to 40 MB. Otherwise (a chat
 connection without `start_upload`), the owner drags the folder onto the Tiniest Cloud web page,
 which takes the same 40 MB.
 
-For teams there are spaces: `create_space` makes one, `add_member` invites people
-into it by email, and `set_space` moves an app into it — every member can open it, they get
+For teams there are spaces, made and given their people in Tiniest Cloud's dashboard (the space
+menu, then Settings → Members); `set_space` moves an app into one — every member can open it, they get
 the `member` role for rules, and a space admin can manage every app in it. Personal apps
 ("My Apps") are unaffected. The same space list also scopes data for
 `data_mode: "team"` apps — see below.
@@ -821,12 +826,13 @@ Rules the platform enforces, so design around them:
 - Visitors with no account may call a connection only if the owner marked it public AND the
   app has open submissions on (see below). Default is signed-in users only.
 
-When an app needs a key, DECLARE THE CONNECTION WITHOUT ONE (`set_connection` with no
-`secret`). That creates a slot: the app is wired up, and the owner pastes the key once. The
-tool hands back a link straight to the panel — give it to them, since finishing the setup is
-theirs to do and a key pasted there never enters the conversation. Only pass a secret through
-the tool if the person has already handed you the value. Never put a key in the app's files —
-they are downloadable.
+When an app needs a key, DECLARE THE CONNECTION (`set_connection`); a key is never passed
+through the tool. That creates a slot: the app is wired up, and the owner adds the key once, in
+the box on the card the tool shows where cards appear, or at the panel link the tool hands back —
+give it to them, since finishing the setup is theirs to do and a key added there never enters
+the conversation. For a URL that is itself the secret (a Slack or Discord webhook), give only
+its host as the base URL; the owner adds the full URL the same way. Never put a key in the app's
+files — they are downloadable.
 
 ## Visitors with no account — three separate grants
 
@@ -1111,7 +1117,7 @@ seconds in all. A visitor with no account can call functions only on an app with
 submissions, and a function they trigger may use `tiny.ai` only if the app has public AI.
 
 Check your work with `run_function` — it runs one as the owner and shows what it returned and
-printed — and `list_functions`, which shows every recent call, its error and its console
+printed — and `get_logs`, the app's backend log: every recent call, its error and its console
 output. A deployment that has not switched functions on answers `tiny.call` with 503.
 
 ---

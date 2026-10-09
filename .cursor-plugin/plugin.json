@@ -1,6 +1,6 @@
 {
   "name": "tiniest-cloud",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Deploy web apps to Tiniest Cloud from the conversation. Every app gets sign-in, per-user storage, realtime, push notifications, scheduled jobs and an AI model, with no keys and no backend to write.",
   "author": {
     "name": "Tiniest Cloud",
