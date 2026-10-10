@@ -647,9 +647,12 @@ Through the Tiniest Cloud MCP server:
 - `list_apps`, `list_versions`, `rollback` — history is immutable and restorable
 - `deploy(slug, files, publish: false)` saves a draft without changing what visitors see; `publish(slug, version?)` puts a draft, or any version, live. A version whose code calls `tiny.*` but never loads /sdk.js is kept as a draft rather than published
 - `unpublish(slug)` takes an app offline without deleting anything (its address says it is not published; data, versions and app keys are untouched); `publish` brings it back
-- `set_webhook`, `list_webhooks`, `remove_webhook`, if your connection has them — addresses other services call (see "Receiving from other services")
+- `set_webhook`, `list_webhooks`, if your connection has them — addresses other services call (see "Receiving from other services")
 - `share`, `set_data_mode`, `set_space`, `set_space_access` — access and tenancy
-- `delete_app`
+
+Nothing deletes through a tool. An app, a stored entry, a connection, a domain, a job, a webhook
+or an app key is deleted by its owner in the Tiniest Cloud dashboard, from the app's own panel;
+send them there. A deleted app can be brought back with `restore_app` for 30 days.
 
 Apps are private to their owner until shared (`share`), or opened to anyone with the
 link (`set_access` with 'link' — every signed-in visitor then gets their own data as a
@@ -1049,7 +1052,8 @@ A key reaches that app's data and nothing else — no AI, no tiny.fetch, no file
 and sees what a scheduled job sees: the pool in a shared app, the owner's own data in a private
 one, the app's team space in team mode. The app's rules apply. A `read` key cannot write;
 writes made with a key have `created_by: null`. The key is shown once. Never put one in a page
-or a public repository: anyone holding it can do what it allows. Revoke it with revoke_app_key.
+or a public repository: anyone holding it can do what it allows. The owner revokes it from the
+app's Keys panel in Tiniest Cloud.
 For another service PUSHING into an app, a webhook (above) is the better door.
 
 ## Server code — backend functions
