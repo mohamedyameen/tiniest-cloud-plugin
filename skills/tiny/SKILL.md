@@ -1038,12 +1038,12 @@ deliveries per day come from the plan, and at most 120 deliveries a minute per a
 ## Reaching an app's data from a script — app keys
 
 For something outside a browser — a spreadsheet export, a Zapier step, a cron job on another
-server — make an app key (create_app_key, or the app's Keys panel). It is sent as a bearer
-token to the app's own data API, the same endpoints the SDK uses:
+server — make an app key (create_app_key, or the app's Keys panel). The script sends it as a
+bearer token (an `Authorization: Bearer` header) to the app's own data API, at the app's own
+address, the same endpoints the SDK uses:
 
-    curl -H "Authorization: Bearer tk_…" "https://<app>.tiniestcloud.app/_api/kv/list?prefix=order:&order=-%24created_at&limit=20"
-    curl -X POST -H "Authorization: Bearer tk_…" -H "Content-Type: application/json" \
-         -d '{"key":"order:1","value":{"total":5}}' "https://<app>.tiniestcloud.app/_api/kv/set"
+    GET  /_api/kv/list?prefix=order:&order=-%24created_at&limit=20
+    POST /_api/kv/set     JSON body {"key":"order:1","value":{"total":5}}
 
 A key reaches that app's data and nothing else — no AI, no tiny.fetch, no files, no functions —
 and sees what a scheduled job sees: the pool in a shared app, the owner's own data in a private
@@ -1126,11 +1126,10 @@ output. A deployment that has not switched functions on answers `tiny.call` with
 
 ---
 
-Deployment needs the Tiniest Cloud MCP server connected. If it isn't, this is the one command:
+Deployment needs the Tiniest Cloud MCP server connected. If it isn't, this is the one command,
+then /mcp in Claude Code to sign in when the browser opens:
 
-    claude mcp add --transport http tiniest-cloud https://app.tiniest.cloud/mcp \
-      --header "Authorization: Bearer <your token>"
+    claude mcp add --transport http tiniest-cloud https://app.tiniest.cloud/mcp
 
-Get a token from the "Connect Claude Code" panel on the Tiniest Cloud web page. In claude.ai or
-the Claude desktop app there is no token: add https://app.tiniest.cloud/mcp as a custom connector under
+In claude.ai or the Claude desktop app, add https://app.tiniest.cloud/mcp as a custom connector under
 Customize → Connectors and sign in when the browser opens.
