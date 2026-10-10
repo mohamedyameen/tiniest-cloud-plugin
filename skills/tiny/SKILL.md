@@ -1126,10 +1126,8 @@ output. A deployment that has not switched functions on answers `tiny.call` with
 
 ---
 
-Deployment needs the Tiniest Cloud MCP server connected. If it isn't, this is the one command,
-then /mcp in Claude Code to sign in when the browser opens:
-
-    claude mcp add --transport http tiniest-cloud https://app.tiniest.cloud/mcp
-
-In claude.ai or the Claude desktop app, add https://app.tiniest.cloud/mcp as a custom connector under
-Customize → Connectors and sign in when the browser opens.
+Deployment needs the Tiniest Cloud MCP server connected. The Tiniest Cloud plugin connects it;
+without the plugin, Settings → Coding agents on the Tiniest Cloud web page shows the one command
+for Claude Code, Cursor, Codex and other agents, and in claude.ai or the Claude desktop app it is
+added as a custom connector under Customize → Connectors. Signing in happens in the browser; there
+is no key to type.
