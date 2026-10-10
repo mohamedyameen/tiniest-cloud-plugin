@@ -42,6 +42,9 @@ agent gets wrong when it treats this like ordinary static hosting:
 
 The server cannot read your disk. Read the files yourself and pass their contents to `deploy`.
 Every deploy is a new immutable version, and earlier versions stay restorable with `rollback`.
+`deploy` with `publish: false` saves a draft without changing what visitors see; `preview_app`
+with its `version` opens it at the app's preview address (the owner's only); `publish` puts it
+live. `unpublish` takes an app offline without deleting anything, and `publish` brings it back.
 
 If a deploy reports that an app uses `localStorage` or calls its own backend, `modernize_app`
 converts it to the platform's own storage and sign-in.

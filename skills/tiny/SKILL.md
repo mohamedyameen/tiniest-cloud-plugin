@@ -645,6 +645,8 @@ Through the Tiniest Cloud MCP server:
 - `deploy(slug, files)` — creates the app on first use; every deploy is a new version
 - `start_upload(slug, size)`, if your connection has it — for a build over 2 MB: an upload link, then `deploy(slug, upload_id)`
 - `list_apps`, `list_versions`, `rollback` — history is immutable and restorable
+- `deploy(slug, files, publish: false)` saves a draft without changing what visitors see; `publish(slug, version?)` puts a draft, or any version, live. A version whose code calls `tiny.*` but never loads /sdk.js is kept as a draft rather than published
+- `unpublish(slug)` takes an app offline without deleting anything (its address says it is not published; data, versions and app keys are untouched); `publish` brings it back
 - `set_webhook`, `list_webhooks`, `remove_webhook`, if your connection has them — addresses other services call (see "Receiving from other services")
 - `share`, `set_data_mode`, `set_space`, `set_space_access` — access and tenancy
 - `delete_app`
@@ -715,7 +717,9 @@ Do NOT look for a password or ask for one — there is no credential for you to 
 
 If you can open a browser, use `preview_app` instead. It gives you a one-time URL that
 opens the app ALREADY SIGNED IN as the connected account. That is the whole answer to
-"let me go and look at it".
+"let me go and look at it". For a draft, pass its `version` (or `preview: true` for the
+newest): the link opens the app's preview address, `<app>--preview`, which shows that version
+to the app's owner and space admins only, with the app's real data, while the live app is unchanged.
 
 Whether or not you can, these are worth doing:
 
