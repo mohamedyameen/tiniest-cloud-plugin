@@ -991,7 +991,7 @@ when a payment succeeds, a form tool when someone submits, GitHub on a push, Zap
 anything. The app needs no code to receive it:
 
     set_webhook({ slug: "crm", name: "leads", save_to: "lead:" })
-    → https://<app>.tiniestcloud.app/_hook/leads/Xy3…   (the URL to paste into the other service)
+    → the app's address + /_hook/leads/Xy3…   (the URL to paste into the other service)
 
 Each delivery — JSON, a form, or text, up to 256 KB — is saved as one record under
 `save_to` plus a generated key that sorts by arrival (`lead:0mg4x2k1a-9f3c…`), so
@@ -1017,7 +1017,7 @@ Signatures. Anyone holding the URL can post to it, so a sender that signs its re
 be checked. `verify` is one of `stripe`, `github`, `standard` (Standard Webhooks — what
 Svix-based senders use) or `hmac` with `verify_header` (an HMAC-SHA256 of the body in that
 header, hex or base64 — Shopify's `X-Shopify-Hmac-Sha256`, Typeform's `Typeform-Signature`,
-Razorpay's `X-Razorpay-Signature`). The signing SECRET is never passed through you: the owner
+Razorpay's `X-Razorpay-Signature`). The signing secret is never passed through you: the owner
 copies it from the sender's dashboard into the app's Webhooks panel. Senders usually show that
 secret only after the URL is saved, so until it is pasted deliveries are refused with 503 —
 say so, and hand the owner the panel link from set_webhook's reply.
