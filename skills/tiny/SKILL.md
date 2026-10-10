@@ -798,7 +798,7 @@ server that is not here. The conversion is mechanical:
    `tiny.db.delete(key)`; server-side totals → `count`/`sum`/`countBy`/`sumBy`.
    Key records under a prefix per collection ("todo:<id>"). Third-party APIs the app
    calls directly (weather, maps) are not its backend — leave them.
-4. Delete the login: token storage, Authorization headers, and the login/register/me
+4. Delete the login: token storage, auth headers, and the login/register/me
    endpoints all go. `tiny.me()` on load; `tiny.login()` when it returns null.
 5. Write `tiny.rules.json` for the record shapes, run the build, deploy the output.
 
@@ -823,8 +823,8 @@ and the app calls the API by that name:
 Rules the platform enforces, so design around them:
 
 - A connection reaches ONE host. `path` is appended to its base URL; it cannot name a host.
-- The secret is attached by the server (bearer, header, query or basic). The app never sends
-  or sees it; an Authorization header the app sets is ignored.
+- The secret is attached by the server (as a bearer token, a header, a query parameter or
+  basic auth). The app never sends or sees it; an auth header the app sets is ignored.
 - https only. No redirects followed. 10 s timeout, 256 KB request, 2 MB response.
 - Limits per app: a burst per minute and a daily count from the owner's plan.
 - Visitors with no account may call a connection only if the owner marked it public AND the
@@ -1038,9 +1038,9 @@ deliveries per day come from the plan, and at most 120 deliveries a minute per a
 ## Reaching an app's data from a script — app keys
 
 For something outside a browser — a spreadsheet export, a Zapier step, a cron job on another
-server — make an app key (create_app_key, or the app's Keys panel). The script sends it as a
-bearer token (an `Authorization: Bearer` header) to the app's own data API, at the app's own
-address, the same endpoints the SDK uses:
+server — make an app key (create_app_key, or the app's Keys panel). The script sends it with
+each request, as a bearer token in the standard header, to the app's own data API at the app's
+own address, the same endpoints the SDK uses:
 
     GET  /_api/kv/list?prefix=order:&order=-%24created_at&limit=20
     POST /_api/kv/set     JSON body {"key":"order:1","value":{"total":5}}
