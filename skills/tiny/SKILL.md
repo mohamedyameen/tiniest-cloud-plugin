@@ -381,9 +381,9 @@ space the app lives in when the space has a team plan, and the app's owner other
 because the ceiling is invisible while you build: an app you test on a paid account works, then
 returns 429 in a free-tier visitor's browser.
 
-    free  haiku-4.5, sonnet-5              effort up to "low"      (the default)
-    pro   + opus-5                         effort up to "high"
-    space   + opus-5                         effort up to "max"      (a team plan, per seat)
+    free  haiku-5.5, sonnet-5.5            effort up to "low"      (the default)
+    pro   + opus-5.5                       effort up to "high"
+    space   + opus-5.5                       effort up to "max"      (a team plan, per seat)
 
 So: leave `effort` alone unless the app genuinely needs the reasoning, and don't name a
 model unless you have a reason to. The defaults run everywhere.
@@ -405,7 +405,8 @@ to pick a model you know will run, or to disable a button before it fails rather
 It never reports the owner's plan or billing.
 
 Every call is also rate limited per user per hour and per app per day, and the space's
-monthly AI pool is finite — it is spent by the app's users, not by you. Exceeding any of
+monthly AI allowance (dollars: $2 on free, $10 on Pro, $15 a seat on Team, each call charged
+by what it uses) is finite — it is spent by the app's users, not by you. Exceeding any of
 these gets a 429 with a message written for the person reading it (a spent pool says whether
 a pack is being added automatically or the owner needs to buy one) — show that message
 rather than a generic failure, and expect calls to resume once the owner tops up. On a team
@@ -445,7 +446,7 @@ asks three things. A low `confidence` means "show this one to a person", so do.
 
 It cannot write, summarise or extract free text — that is still `generate`. The good pattern is
 both: judge every row, and spend `generate` only on the few that pass. It draws on the same
-monthly pool at about a fortieth of the rate, with a call allowance of its own (600 an hour per
+monthly allowance at about a fiftieth of Sonnet's input rate, with a call allowance of its own (600 an hour per
 person, far above `generate`'s, because a list is one call per row);
 `(await tiny.ai.limits()).judge` reports `available` and what is left.
 
@@ -656,7 +657,9 @@ send them there. A deleted app can be brought back with `restore_app` for 30 day
 
 Apps are private to their owner until shared (`share`), or opened to anyone with the
 link (`set_access` with 'link' — every signed-in visitor then gets their own data as a
-normal user; freely reversible).
+normal user; freely reversible). An internal tool for one company stays restricted with
+`company_access` on `set_access`: anyone signed in with a verified address on the company's
+email domain can then open it, without being invited one by one (paid plans).
 
 Every app's name carries its company: `deploy("notes", …)` in Acme's space creates
 `notes--acme`, served at notes--acme.tiniestcloud.app, so two companies can each have a
