@@ -25,6 +25,14 @@ questions. Start by writing those questions down; every tile and chart answers o
 - Format with `Intl.NumberFormat` (currency, percent, compact "12.4K") in the reader's locale;
   `tabular-nums`; numeric columns right-aligned with their units.
 - Say where a number comes from and how fresh it is ("Updated 2 min ago").
+- A stat tile shows its number at a glance: a small icon beside the label (in the accent, not
+  boxed above it), the number, its context ("of ‹total›", "‹n› ‹changed›"), then a small visual
+  that explains it — bars over time, a split bar, a progress bar, a sparkline — drawn from the
+  real data, never decoration.
+- Every chart answers the pointer, small ones too: the part under it lifts while the rest dim,
+  and the app's tooltip gives its exact numbers ("‹label› · ‹value› ‹unit›"), placed so it
+  doesn't cover the headline number. Give each part a hit area bigger than its ink (a whole
+  column for a thin bar), and keep the summary in the chart's label for screen readers.
 
 ## Charts
 

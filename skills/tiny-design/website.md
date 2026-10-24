@@ -38,7 +38,7 @@ ten words that says what it is and for whom; one primary action and at most one 
   lazy below the fold, compressed (WebP or AVIF), alt text that says what is shown.
 - Motion: one orchestrated entrance for the hero, at most a gentle reveal as sections scroll
   in. Never hijack scrolling.
-- Navigation: a header that stays out of the way (it may shrink as you scroll), a real menu on
+- Navigation: a header that stays at the top as you scroll (it may shrink), a real menu on
   a phone, a footer with contact and the essentials.
 - Every page has its own title and description, one `h1`, headings in order, and an image for
   link previews.

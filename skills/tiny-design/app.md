@@ -33,17 +33,22 @@ phone-width column for the screens that are one task; anywhere else it reads as 
 
 - **Open on the work.** The first screen is the thing people do most — the list with a way to
   add to it — not a welcome page. An empty state explains the first step and offers the button.
-- **Navigation that fits the size.** Two or three areas: tabs in the header. Four or more: a
-  sidebar on desktop that becomes a bottom bar (five items at most) on a phone. Keep the app's
-  name or logo, the theme switch and the account at the edges.
+- **Navigation that fits the size.** Two or three areas: tabs in the header on a laptop. Four
+  or more: a sidebar. On a phone, either becomes a bottom navigation bar (five items at most),
+  and the header shrinks to one row. Keep the app's name or logo, the theme switch and the
+  account at the edges. The header stays pinned at the top while the page scrolls
+  (`sticky top-0`, solid background).
 - **Lists are the heart.** A row per item: the main text strong, a secondary line muted,
   status as a small consistent badge, meta (date, amount) right-aligned in tabular figures.
   Search, filters and sort sit above the list and run on the server (`where`, `order`, `limit`);
-  more rows come with "Load more" or a cursor, never by loading everything.
+  more rows come with "Load more" or a cursor, never by loading everything. On a long list the
+  search and filters stay in view while it scrolls, pinned just under the header.
 - **Adding and editing.** A short form (up to about five fields) in a dialog — a bottom sheet
   on a phone; anything longer on its own page. Save shows progress and then the result in place.
 - **Detail.** A header with the title, status and actions; the content; then activity — who
   created it and when (`created_by`, `mine`, `created_at`), shown as "You · 2 hours ago".
+  On a phone the way back stays pinned under the header and the actions sit in their own bar
+  pinned above the bottom navigation.
 - **Deleting.** Reversible actions get an Undo in a toast instead of a confirmation; only what
   cannot be undone asks first, in words that name the thing.
 
