@@ -507,9 +507,13 @@ owner set for them (Settings → Members), so one colleague
 cannot spend everyone's month; that 429 names the owner as the person who can raise it.
 Visitors are not members and draw on the pool itself.
 
-If a deploy comes back **402**, the payer's subscription lapsed and they are over the free
-plan's app limit. Every app is still serving and no data is affected — only new deploys are
-paused. Relay the message verbatim: when a SPACE was paying, the person who hit this often
+Apps in a space without a paid plan show a small "Built on Tiniest Cloud" mark at the bottom
+right of every page, added when the page is served; leave that corner clear and never draw your
+own. The Personal plan removes it.
+
+If a deploy comes back **402**, the payer's subscription lapsed and the space holds more apps
+than a space without a plan keeps deployable. Every app is still serving and no data is affected
+— only new deploys are paused. Relay the message verbatim: when a SPACE was paying, the person who hit this often
 cannot fix it themselves, and the message names the space and the owner who can.
 
 ### Decisions — tiny.ai.judge
@@ -924,7 +928,7 @@ Rules the platform enforces, so design around them:
 - The secret is attached by the server (as a bearer token, a header, a query parameter or
   basic auth). The app never sends or sees it; an auth header the app sets is ignored.
 - https only. No redirects followed. 10 s timeout, 256 KB request, 2 MB response.
-- Limits per app: a burst per minute and a daily count from the owner's plan.
+- Limits: a burst per minute per app, and a monthly count from the owner's plan shared by every app in the space (with a quiet daily guard of a tenth of it). Every plan's numbers are on the platform's /pricing.md page.
 - Visitors with no account may call a connection only if the owner marked it public AND the
   app has open submissions on (see below). Default is signed-in users only.
 
@@ -1050,8 +1054,8 @@ arithmetic over rows. The code is an ES module with a default export. It gets th
 after the code returns, under the app's rules, in order, stopping at the first refused key.
 The return value is bound to `as`. The code runs in an isolated machine with no network, no
 keys and no access to the platform — everything it needs to read must arrive in `input` —
-for at most 10 seconds; `console.log` output comes back in the trace. Paid plans only, with a
-daily allowance per app. A run that throws or times out writes nothing.
+for at most 10 seconds; `console.log` output comes back in the trace. Every plan has a monthly
+allowance, small on Free, which the space's apps share. A run that throws or times out writes nothing.
 
     set_job({
       slug: "gold", name: "weekly-digest", daily_at: "08:00", timezone: "Asia/Kolkata",
@@ -1131,7 +1135,8 @@ delivery of the same event is answered 200 and saved once. Keys are never taken 
 sender. `list_webhooks` shows each hook and its recent deliveries — what the sender was
 answered, where it was saved, and how the job it started went — which is the first place to
 look when an expected event did not arrive. Limits: the number of hooks per app and the
-deliveries per day come from the plan, and at most 120 deliveries a minute per app.
+deliveries a month (shared by every app in the space) come from the plan, and at most 120
+deliveries a minute per app.
 
 ## Reaching an app's data from a script — app keys
 
@@ -1214,7 +1219,7 @@ into the file first, e.g. `npx esbuild src/x.ts --bundle --format=esm --outfile=
 `node:` built-ins like `node:crypto` work), or call another function. A deploy with a function
 that does not parse, or imports something it cannot load, is refused with the file named.
 
-Limits, by plan: how many functions an app ships, calls a day, CPU time per call (waiting on
+Limits, by plan: how many functions an app ships, calls a month across the space's apps, CPU time per call (waiting on
 `tiny.db` or `tiny.fetch` does not count), how many `tiny` calls one call may make, and 30
 seconds in all. A visitor with no account can call functions only on an app with open
 submissions, and a function they trigger may use `tiny.ai` only if the app has public AI.
