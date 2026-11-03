@@ -814,6 +814,15 @@ new one. Leave `<link rel="icon">` out of your HTML — it would decide the tab 
 
 ## After deploying: how to check your work
 
+**Building with the person watching.** When you build a new app or make a run of changes, and
+you can show a browser beside the chat (a browser panel, or a browser you drive), call
+`preview_app` with `app` and `build: true` once, after the first deploy, and open its link
+there. It is the app's build view: the newest version running, a draft included, with the app's
+code, data and settings beside it. Leave it open. Every later deploy shows up in it by itself,
+so there is no need for another link each time. Without a browser, give the person the link and
+tell them to keep it open next to the chat. On an app people already use, deploy with
+`publish: false` while you work, and publish when the person says it is right.
+
 Apps are gated by a sign-in, so opening an app's normal URL only ever shows the login page.
 Do NOT look for a password or ask for one — there is no credential for you to type.
 
