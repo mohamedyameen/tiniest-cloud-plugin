@@ -742,7 +742,7 @@ Through the Tiniest Cloud MCP server:
 - `deploy(slug, files)` — creates the app on first use; every deploy is a new version
 - `start_upload(slug, size)`, if your connection has it — for a build over 2 MB: an upload link, then `deploy(slug, upload_id)`
 - `list_apps`, `list_versions`, `rollback` — history is immutable and restorable
-- `deploy(slug, files, publish: false)` saves a draft without changing what visitors see; `publish(slug, version?)` puts a draft, or any version, live. A version whose code calls `tiny.*` but never loads /sdk.js is kept as a draft rather than published
+- `deploy(slug, files)` saves a draft without changing what visitors see; the person puts it live with Publish in the build view, or asks you to and you call `publish(slug, version?)`, which puts a draft, or any version, live. `deploy` with `publish: true` goes live at once, only when the person asked for that. A version whose code calls `tiny.*` but never loads /sdk.js is kept as a draft rather than published
 - `unpublish(slug)` takes an app offline without deleting anything (its address says it is not published; data, versions and app keys are untouched); `publish` brings it back
 - `set_webhook`, `list_webhooks`, if your connection has them — addresses other services call (see "Receiving from other services")
 - `share`, `set_data_mode`, `set_space`, `set_space_access` — access and tenancy
@@ -820,8 +820,8 @@ you can show a browser beside the chat (a browser panel, or a browser you drive)
 there. It is the app's build view: the newest version running, a draft included, with the app's
 code, data and settings beside it. Leave it open. Every later deploy shows up in it by itself,
 so there is no need for another link each time. Without a browser, give the person the link and
-tell them to keep it open next to the chat. On an app people already use, deploy with
-`publish: false` while you work, and publish when the person says it is right.
+tell them to keep it open next to the chat. Every deploy is a draft: visitors see nothing new
+until the person presses Publish there, or tells you to publish.
 
 Apps are gated by a sign-in, so opening an app's normal URL only ever shows the login page.
 Do NOT look for a password or ask for one — there is no credential for you to type.
