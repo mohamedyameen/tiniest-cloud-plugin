@@ -1,17 +1,19 @@
 ---
 name: tiny
 description: >-
-  Build and deploy static apps to Tiniest Cloud, which gives every app auth, per-user
-  storage, and an LLM with no keys or configuration. Use when building or changing
-  an app hosted on Tiniest Cloud, or when you see tiny.db, tiny.ai, or tiny.rules.json.
+  Build and deploy apps, websites, dashboards and reports to Tiniest Cloud, which gives each
+  one sign-in, per-user storage, backend functions and an LLM with no keys or configuration.
+  Use when building or changing an app hosted on Tiniest Cloud, or when you see tiny.db,
+  tiny.ai, or tiny.rules.json.
 ---
 
 # Building for Tiniest Cloud
 
-Tiniest Cloud hosts static frontends and gives each one auth, per-user storage, and an LLM with
-no configuration. When building for Tiniest Cloud, build a static frontend and use the SDK
-below — do NOT use localStorage, write a login flow, or add a server of your own. Logic that
-must run where users cannot change it is a backend function (see "Server code").
+Tiniest Cloud puts apps, websites, dashboards and reports online and gives each one sign-in,
+per-user storage, realtime, scheduled jobs, backend functions and an LLM, with no configuration.
+When building for Tiniest Cloud, build the frontend with the SDK below and do NOT use localStorage,
+write a login flow, or add a server of your own. Logic that must run where users cannot change
+it is a backend function (see "Server code").
 
 Some clients show only the start of this guide. Before building, call `tiny_guide`: it returns
 what every build needs and names the other sections, and `section` returns one of them (`fetch`
@@ -879,7 +881,7 @@ messages, or anything a user of the app might read.
 
 ## Constraints — check before designing
 
-- A static frontend, with no server of its own and no app-sent email. Code that must run on
+- No server of its own and no app-sent email. Code that must run on
   the server is a backend function (see "Server code"); work on a schedule is a job (see
   "Scheduled jobs"); another service telling the app something happened is a webhook (see
   "Receiving from other services").

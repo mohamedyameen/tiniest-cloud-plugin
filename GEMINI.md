@@ -1,8 +1,8 @@
 # Building for Tiniest Cloud
 
-Tiniest Cloud hosts static frontends. Each one gets sign-in, per-user storage, realtime rooms,
-push notifications, scheduled jobs and a language model, with no keys anywhere and no backend
-to write.
+Tiniest Cloud puts apps, websites, dashboards and reports online. Each one gets sign-in,
+per-user storage, realtime rooms, push notifications, scheduled jobs, backend functions and a
+language model, with no keys anywhere and no server to set up.
 
 ## Call `tiny_guide` first
 
@@ -23,9 +23,9 @@ match), those come first and the playbook only fills what they leave open.
 ## What never changes
 
 These four hold regardless of which version of the SDK is current, and they are the ones an
-agent gets wrong when it treats this like ordinary static hosting:
+agent gets wrong when it treats this like ordinary web hosting:
 
-- **Build a static frontend.** Plain HTML, CSS and JavaScript, or a framework's build output
+- **Build the frontend with the SDK.** Plain HTML, CSS and JavaScript, or a framework's build output
   (a React or Astro project's `dist/`), with `index.html` at the top level of what you deploy. With a shell, a new one starts from
   `npm create tiniest-cloud@latest <folder>` (add `-- --template site` for a website).
 - **Do not write a login flow.** Sign-in belongs to the platform. The SDK tells you who the

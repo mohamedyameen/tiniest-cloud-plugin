@@ -1,6 +1,6 @@
 {
   "name": "tiniest-cloud",
-  "description": "Tiniest Cloud's plugin: deploy web apps with sign-in, storage and AI built in.",
+  "description": "Tiniest Cloud's plugin: build and put unlimited apps, websites, dashboards and reports online, free and secure.",
   "owner": {
     "name": "Tiniest Cloud",
     "email": "support@tiniest.cloud"
@@ -9,7 +9,7 @@
     {
       "name": "tiniest-cloud",
       "source": "./",
-      "description": "Deploy web apps to Tiniest Cloud, with sign-in, storage and AI built in."
+      "description": "Build and put unlimited apps, websites, dashboards and reports online, with sign-in, a database and AI built in."
     }
   ]
 }

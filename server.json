@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "cloud.tiniest/tiniest-cloud",
   "title": "Tiniest Cloud",
-  "description": "Deploy web apps with sign-in, per-user storage, realtime and AI built in.",
-  "version": "1.0.0",
+  "description": "Put unlimited apps, websites, dashboards and reports online, with sign-in, a database and AI.",
+  "version": "1.0.1",
   "websiteUrl": "https://tiniest.cloud",
   "repository": {
     "url": "https://github.com/mohamedyameen/tiniest-cloud-plugin",

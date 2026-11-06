@@ -1,8 +1,9 @@
 # Tiniest Cloud
 
-Build a web app in a conversation with Claude, or with your coding agent, and put it online at
-[Tiniest Cloud](https://tiniest.cloud). Every app gets sign-in, per-user storage, realtime, push
-notifications, scheduled jobs and an AI model — with no keys to manage and no backend to write.
+Build and put unlimited apps, websites, dashboards and reports online, free and secure, right
+from a conversation with Claude or your coding agent, on [Tiniest Cloud](https://tiniest.cloud).
+Each one comes with sign-in, a database, realtime, push notifications, scheduled jobs and AI built
+in — with no keys to manage and no server to set up.
 
 This plugin adds two things:
 
@@ -11,7 +12,7 @@ This plugin adds two things:
   an app offline without deleting it, share an app by email, roll back to an earlier version, connect a
   third-party API without putting its key in the page, schedule recurring work, and put an app
   on your own domain, and read or change the data an app has saved.
-- **The `tiny` skill**, which tells Claude how to build for the platform — a static frontend
+- **The `tiny` skill**, which tells Claude how to build for the platform — a frontend
   using the `tiny` SDK, no login flow, no `localStorage`, no server of its own (server logic
   goes in backend functions) — and to fetch the
   current SDK reference with the `tiny_guide` tool before it starts.

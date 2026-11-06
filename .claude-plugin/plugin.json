@@ -1,8 +1,8 @@
 {
   "name": "tiniest-cloud",
   "displayName": "Tiniest Cloud",
-  "version": "1.0.24",
-  "description": "Deploy web apps to Tiniest Cloud from the conversation. Every app gets sign-in, per-user storage, realtime, push notifications, scheduled jobs and an AI model, with no keys and no backend to write.",
+  "version": "1.0.25",
+  "description": "Build and put unlimited apps, websites, dashboards and reports online, free and secure, right from Claude. Each one comes with sign-in, a database, realtime, push notifications, scheduled jobs and AI built in, with no server to set up.",
   "author": {
     "name": "Tiniest Cloud",
     "email": "support@tiniest.cloud",
@@ -15,7 +15,7 @@
   "keywords": [
     "deploy",
     "hosting",
-    "static-site",
+    "web-apps",
     "auth",
     "storage",
     "ai",
