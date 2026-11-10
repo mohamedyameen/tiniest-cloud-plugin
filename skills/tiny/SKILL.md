@@ -31,7 +31,10 @@ With a shell to run a build in, start from a starter project:
     npm create tiniest-cloud@latest <folder>                      # an app
     npm create tiniest-cloud@latest <folder> -- --template site   # a website
 
-Then, in that folder, `npm install`, `npm run build`, and deploy `dist/`.
+Then, in that folder, `npm install`, `npm run build`, and deploy the folder itself, with its
+built `dist/` inside (no node_modules, no .env files). Tiniest Cloud serves `dist/` and keeps
+the rest with the version as the project's source: the person reads it in the build view's Code
+tab, and `get_app_source` returns it in a later conversation.
 
 - **app** — React, TypeScript, Vite, Tailwind CSS and shadcn/ui, for something people sign
   in to and use (a tracker, a CRM, a tool). The SDK tag, its types (`src/tiny.d.ts`) and React
@@ -66,8 +69,10 @@ can keep being edited. Plain HTML, CSS and JavaScript needs no build at all.
 
 To change a live app by sending files in the deploy call itself, send only the change:
 `deploy` with `base_version` (the live version) and just the files you edited, plus `remove`
-for any you deleted. The other files carry over, and an app built here is built again from its
-source. Deploying a folder needs none of this: only the files that changed are sent.
+for any you deleted. The other files carry over. A version that keeps its project's source (built
+here, or deployed with its build inside) takes changes to that source and is built again here;
+to ship a build of your own instead, deploy the whole project folder again. Deploying a folder
+needs none of this: only the files that changed are sent.
 
 Not everything is an app. When the person wants a FILE — a slide deck, a report, a spreadsheet,
 a PDF — made from an app's data, read the data with `summarize_app_data` (totals) and
@@ -764,13 +769,14 @@ Every app's name carries its company: `deploy("notes", …)` in Acme's space cre
 `notes`. Later calls may use the short name (`notes`) or the full one; the deploy reply says
 the full one.
 
-A build over 2 MB (a framework's output with its images, say) is too big to pass inline. With a
-shell and a connection that has `start_upload`: zip the build folder — the one holding
-index.html, so index.html is at the top of the zip (`cd dist && zip -r ../build.zip .`) — take
-its exact size in bytes (`wc -c < build.zip`), call `start_upload`, run the curl command it
-returns, then call `deploy` with the `upload_id`. Up to 40 MB. Otherwise (a chat app, or a
-connection without `start_upload`), the owner drags the folder onto the Tiniest Cloud web page,
-which takes the same 40 MB.
+With a shell and a connection that has `start_upload`, a project you built goes up as one zip,
+whatever its size, rather than file by file in the call: zip the project folder from inside it,
+with its build in it and without node_modules, .git or .env files
+(`zip -r ../app.zip . -x 'node_modules/*' '.git/*' '.env*'`), take its exact size in bytes
+(`wc -c < ../app.zip`), call `start_upload`, run the curl command it returns, then call
+`deploy` with the `upload_id`. Up to 40 MB. Without either, files pass inline up to 2 MB; past
+that (a framework's build with its images, say), the owner drags the project folder onto the
+Tiniest Cloud web page, which takes the same 40 MB.
 
 For teams there are spaces, made and given their people in Tiniest Cloud's dashboard (the space
 menu, then Settings → Members); `set_space` moves an app into one — every member can open it, they get
@@ -787,8 +793,9 @@ built React/Vue app, convert the source yourself (recipe below) and rebuild. Pre
 building it right the first time; this is for apps that already exist.
 
 Every deploy is checked before it goes live. Safe fixes are applied automatically and
-reported back: a wrapper folder or a lone dist/build folder is re-rooted, and
-node_modules/.git are never stored. Files that look like credentials (.env and friends)
+reported back: a wrapper folder is removed, a project sent with its build inside deploys the
+build (dist/, build/ or out/) and keeps the rest as its source, and node_modules/.git are never
+stored. Files that look like credentials (.env and friends)
 fail the deploy. Framework source with a `build` script and nothing built is built on the
 platform (above); source without one is refused — build it, then deploy the output.
 
@@ -887,8 +894,8 @@ messages, or anything a user of the app might read.
   "Receiving from other services").
 - The app CANNOT fetch cross-origin pages. If a feature needs page content, the user must
   paste it; say so in the UI rather than implying the app read it.
-- index.html must be at the top level of the deployed files. For a framework project that
-  means the build output (dist/), not the source root.
+- index.html must be at the top level of what is served. For a framework project that is its
+  build output: deploy the project folder with dist/ built inside, and dist/ is what is served.
 - Each app is served at the root of its own address, so a build's root-absolute paths
   (`/assets/app.js`) are right from every route. Keep Vite's default `base`; `base: "./"`
   breaks a refreshed deep link such as /customers/12.
@@ -902,8 +909,8 @@ server that is not here. The conversion is mechanical:
 1. Build config: a static build at the site root. Vite: the default `base` (remove
    `base: "./"`). Next.js: `output: "export"` (server components, API routes, and SSR do
    not run here). Nuxt:
-   `nuxt generate`. SvelteKit: adapter-static. Angular: deploy the inner
-   `dist/<project>/browser` folder.
+   `nuxt generate`. SvelteKit: adapter-static. Angular: its build in
+   `dist/<project>/browser` is found inside the project folder.
 2. Add `<script src="/sdk.js"></script>` to the HTML template, before the bundle.
 3. Replace the API client. Each call to the app's own backend has a tiny.db equivalent:
    GET a list → `tiny.db.list(prefix)`; GET one → `tiny.db.get(key)`; POST/PUT/PATCH →

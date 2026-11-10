@@ -1,6 +1,6 @@
 {
   "name": "tiniest-cloud",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Build and put unlimited apps, websites, dashboards and reports online, free and secure, right from Gemini CLI. Each one comes with sign-in, a database, realtime, push notifications, scheduled jobs and AI built in, with no server to set up.",
   "mcpServers": {
     "tiniest-cloud": {
