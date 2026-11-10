@@ -38,7 +38,8 @@ tab, and `get_app_source` returns it in a later conversation.
 
 - **app** — React, TypeScript, Vite, Tailwind CSS and shadcn/ui, for something people sign
   in to and use (a tracker, a CRM, a tool). The SDK tag, its types (`src/tiny.d.ts`) and React
-  hooks (`useMe`, `useEntries` in `src/lib/tiny.tsx`) are already in place.
+  hooks (`useMe`, `useEntries` in `src/lib/tiny.tsx`) are already in place, and the first
+  screen is `src/pages/home.tsx`.
 - **site** — Astro and Tailwind CSS, for pages people read (a landing page, docs, a
   portfolio). Every file in `src/pages` is a page.
 
@@ -46,6 +47,17 @@ Choose by what people mostly do there. Signing in and changing things is an app.
 with one form to send (a sign-up, an order request), is a site; it adds the SDK for that form. A
 site's pages arrive as finished HTML, so search engines and link previews see what they say; an
 app draws its screens in the browser. When a request could be either, ask.
+
+Where files go in an app, so every project reads the same way in the build view's Code tab:
+
+    src/pages/        one file per screen (home.tsx, orders.tsx); App.tsx frames and routes them
+    src/components/   pieces the screens share; src/components/ui/ for shadcn components
+    src/hooks/        the app's own useSomething hooks (the SDK's stay in src/lib/tiny.tsx)
+    src/lib/          plain code: helpers, formatting, types (types.ts), calculations
+    public/           files served as they are, plus _functions/, tiny.rules.json, tiny.brand.json
+
+A file past about 300 lines is doing too much: move its parts into components and hooks. A
+website keeps Astro's own layout the same way: src/pages, src/layouts, src/components.
 
 Add shadcn components with `npx shadcn@latest add <name>`. Several screens in an app: React
 Router's browser routes work as they are — every path that is not a file answers with index.html.
