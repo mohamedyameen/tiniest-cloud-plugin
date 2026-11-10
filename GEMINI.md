@@ -42,7 +42,9 @@ agent gets wrong when it treats this like ordinary web hosting:
 ## Deploying
 
 The server cannot read your disk. Read the files yourself and pass their contents to `deploy`.
-Every deploy is a new immutable version, and earlier versions stay restorable with `rollback`.
+Every deploy is a new immutable version, saved as a draft: nothing goes live from a deploy.
+The person looks at it in the build view and publishes it there, and earlier versions stay
+restorable with `rollback`.
 `deploy` with `publish: false` saves a draft without changing what visitors see; `preview_app`
 with its `version` opens it at the app's preview address (the owner's only); `publish` puts it
 live. `unpublish` takes an app offline without deleting anything, and `publish` brings it back.
