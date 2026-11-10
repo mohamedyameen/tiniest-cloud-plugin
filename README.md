@@ -10,8 +10,9 @@ This plugin adds two things:
 - **The Tiniest Cloud MCP server** (`https://app.tiniest.cloud/mcp`). Claude can deploy a
   folder and get a live URL, save a draft and look at it before it goes live, publish it or take
   an app offline without deleting it, share an app by email, roll back to an earlier version, connect a
-  third-party API without putting its key in the page, schedule recurring work, and put an app
-  on your own domain, and read or change the data an app has saved.
+  third-party API without putting its key in the page, let an app take payments into your own
+  Stripe or Razorpay account, schedule recurring work, put an app on your own domain, and read
+  or change the data an app has saved.
 - **The `tiny` skill**, which tells Claude how to build for the platform — a frontend
   using the `tiny` SDK, no login flow, no `localStorage`, no server of its own (server logic
   goes in backend functions) — and to fetch the

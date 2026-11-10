@@ -752,7 +752,10 @@ Through the Tiniest Cloud MCP server:
 - `deploy(slug, files)` always saves a draft; nothing goes live from a deploy. The person puts it live with Publish in the build view; there is no tool for you to publish. Publish refuses a version whose code calls `tiny.*` but never loads /sdk.js, and says why
 - `unpublish(slug)` takes an app offline without deleting anything (its address says it is not published; data, versions and app keys are untouched); Publish in the build view brings it back
 - `set_webhook`, `list_webhooks`, if your connection has them — addresses other services call (see "Receiving from other services")
-- `share`, `set_data_mode`, `set_space`, `set_space_access` — access and tenancy
+- `share`, `set_data_mode`, `set_space`, `set_space_access` — access and tenancy; `list_spaces` names the person's spaces and who is in each, with roles
+- `set_domain(slug, hostname)` — puts an app on a domain the owner has (a paid plan): the reply gives the two DNS records to add, and calling it again with the same hostname checks them. One per app; the app keeps its own address meanwhile
+- `list_prompts`, `save_prompt` — the prompts the person keeps on Tiniest Cloud for any agent to reuse, and a directory of ideas; each one is something to build and deploy
+- `create_app_key`, `list_app_keys` — keys for the person's own scripts and servers (see "Reaching an app's data from a script"); the list shows names and last four characters, never a key
 
 Nothing deletes through a tool. An app, a stored entry, a connection, a domain, a job, a webhook
 or an app key is deleted by its owner in the Tiniest Cloud dashboard, from the app's own panel;
@@ -760,9 +763,12 @@ send them there. A deleted app can be brought back with `restore_app` for 30 day
 
 Apps are private to their owner until shared (`share`), or opened to anyone with the
 link (`set_access` with 'link' — every signed-in visitor then gets their own data as a
-normal user; freely reversible). An internal tool for one company stays restricted with
-`company_access` on `set_access`: anyone signed in with a verified address on the company's
-email domain can then open it, without being invited one by one (paid plans).
+normal user; freely reversible). An internal tool for a team stays restricted and lives in the
+team's space: every member of the space can open it, without being invited one by one. `owner_only`
+on `set_access` ("Only you" in Share) keeps a restricted app to its owner alone: invited people
+and space members are set aside until it is turned off, and sharing with someone turns it off.
+Who has used an app is in the project's Users tab, where the owner also removes a person's
+access or gives it back; no tool does either, so send them there.
 
 Every app's name carries its company: `deploy("notes", …)` in Acme's space creates
 `notes--acme`, served at notes--acme.tiniestcloud.app, so two companies can each have a
@@ -926,13 +932,16 @@ Calls the old server made to third-party APIs (Slack, a price feed, a mail provi
 `tiny.fetch` through a connection the owner sets up — see "Calling other services". Cron jobs
 and background work become scheduled jobs (`set_job`) — see "Scheduled jobs". Anything else
 the old server did — validation, prices, "only if" updates, anything a user must not be able
-to change — becomes a backend function (see "Server code"). Payments have no home here; disable
-that feature visibly rather than faking it.
+to change — becomes a backend function (see "Server code"). Payments run on the OWNER's own
+Stripe or Razorpay account: a connection holds their key (`stripe` or `razorpay`, see "Calling
+other services"), a backend function creates the checkout so a visitor cannot change the amount,
+and a webhook tells the app the payment went through (see "Receiving from other services"). The
+money goes straight to the owner; Tiniest Cloud is not part of it.
 
 ## Calling other services — tiny.fetch
 
 A hosted app is static files, so an API key in its code is public. Instead the OWNER saves the
-key once as a named connection (the app's Connections panel, or the `set_connection` tool),
+key once as a named connection (the app's Secrets panel, or the `set_connection` tool),
 and the app calls the API by that name:
 
     const res = await tiny.fetch("prices", { path: "/v1/gold?currency=INR" });
@@ -958,12 +967,47 @@ the conversation. For a URL that is itself the secret (a Slack or Discord webhoo
 its host as the base URL; the owner adds the full URL the same way. Never put a key in the app's
 files — they are downloadable.
 
+Popular services have ready-made connections the owner can also add from the app's Connectors
+panel. Use these names and base URLs, so the connection you declare is the one that panel shows
+as added:
+
+    stripe      https://api.stripe.com                       bearer
+    razorpay    https://api.razorpay.com                     basic
+    whatsapp    https://graph.facebook.com                   bearer
+    twilio      https://api.twilio.com                       basic
+    telegram    https://api.telegram.org                     none (the owner pastes the bot token; the address is built from it)
+    slack       https://hooks.slack.com                      none (the owner pastes the full webhook URL)
+    discord     https://discord.com                          none (the owner pastes the full webhook URL)
+    resend      https://api.resend.com                       bearer
+    sendgrid    https://api.sendgrid.com                     bearer
+    openai      https://api.openai.com                       bearer
+    gemini      https://generativelanguage.googleapis.com    header x-goog-api-key
+    elevenlabs  https://api.elevenlabs.io                    header xi-api-key
+    perplexity  https://api.perplexity.ai                    bearer
+    airtable    https://api.airtable.com                     bearer
+    notion      https://api.notion.com                       bearer
+    hubspot     https://api.hubapi.com                       bearer
+
+Twilio and Razorpay take basic auth ("id:secret"); the owner pastes both parts. Telegram's
+address carries the bot token, so declare the bare host and call paths like "/sendMessage".
+
+Stripe, Razorpay and Resend can also send the app their events (a payment, a bounce) through a
+webhook named like the connector — `stripe`, `razorpay`, `resend` — which the owner turns on
+from the service's page in Connectors. Events are saved under `stripe-event:`, `razorpay-event:`
+and `resend-event:`; read them from there, or point the webhook at a job (`set_webhook`).
+
+Payments and messages to other people (Stripe, Razorpay, Resend, SendGrid, Twilio, WhatsApp)
+need a paid plan, Personal or Team. On a free plan a call to them, under any name, is refused
+with a 402 that says so: tell the owner they need the Personal plan for it rather than working
+around it. Alerts to the owner's own channels (Telegram, Slack, Discord), AI and data tools are
+free.
+
 ## Visitors with no account — three separate grants
 
 By default every read and write needs a sign-in, even on a link app. PAGES are always public on
 a link app, so a portfolio or landing page whose content is in the HTML needs nothing here. The
 three grants below are for apps whose content or behaviour lives behind the SDK. Each is a
-separate switch in the Share panel (or a flag on `set_access`), off by default, and each is
+separate switch on the project's Data access page (or a flag on `set_access`), off by default, and each is
 the owner's call — never assume one is on:
 
 - `open_submissions` — a visitor may `tiny.db.set` and `tiny.fetch` through a connection the
@@ -972,9 +1016,13 @@ the owner's call — never assume one is on:
   as a 403 whose message is written for the visitor ("That looks like spam, so it wasn't
   saved."), so show `err.message` beside the form rather than a generic failure. Values with
   under twenty characters of text (a vote, a rating) are never checked. The owner can switch it
-  off in the Share panel; an app created before this existed starts with it off. To check for
+  off on the Data access page; an app created before this existed starts with it off. To check for
   something more specific than spam, add a `judge` condition to the rules file — it replaces
-  the built-in check for its prefix.
+  the built-in check for its prefix. A visitor's submissions are guarded against bots — 300 an
+  hour from one address, then a 429 — while their backend calls have no limit of their own
+  beyond the space's monthly allowance. Staff or members who use an app all day should still
+  sign in with `tiny.login()` rather than through a password box of the app's own: a shared
+  password keeps everyone a visitor and tells nobody apart.
 - `public_reads` — a visitor may read: `get`, `list`, `count`, `sum`, `countBy`, `sumBy`,
   and a stored file by id. A public site, blog or menu whose content lives in tiny.db.
 - `public_ai` — a visitor may call `tiny.ai`, billed to the OWNER's plan under a tight
@@ -986,7 +1034,7 @@ with an empty role set, which is how an app keeps some keys out of public view w
 readable.
 
 Never write a sign-in gate into an app. If everyone who uses it should be signed in, that is a
-SETTING — `require_sign_in` on `set_access`, or "Anyone signed in" in the Share panel — and the
+SETTING — `require_sign_in` on `set_access`, or "Sign-in required" in Share — and the
 platform asks before the app ever loads. Anyone may still come; they just arrive with a name.
 
 So do not check `tiny.me()` at boot and stop at a sign-in screen of your own when it is null.
@@ -1003,6 +1051,27 @@ use the setting instead and never call it at all.
 Design for both states: call `tiny.me()` on load and render the signed-out case honestly. If a
 capability needs a sign-in the app has not been granted, say so at the point of use rather than
 letting the call 401 — and if the owner wants it public, tell them which flag to turn on.
+
+### The sign-in page in the app's look — tiny.brand.json
+
+Visitors sign in on a page the platform serves, dressed as the app: its icon, the name from its
+`<title>`, its `theme-color` on the button and in a brand panel with its description, and
+the colours its stylesheet sets up — `--background`, `--foreground` and `--primary` on
+`:root` and `.dark`, as a Tailwind/shadcn theme names them — by day and at night. For
+what a page cannot declare, ship `tiny.brand.json` beside index.html (with the starters, in
+`public/`, so the build copies it) and fill it from the design you built. `image` is a
+picture for the brand panel — a tall photo with no words on it, not the share card:
+
+    { "radius": "square",                     // square | soft | rounded | pill
+      "font": "DM Sans", "headingFont": "DM Serif Display",   // Google Fonts names
+      "colors": { "primary": "#7a3e12", "background": "#fbf3e6", "text": "#2b1a12", "panel": "#3d2314" },
+      "dark":   { "primary": "#e0a46b", "background": "#1c140f", "text": "#f5e9dc" },
+      "layout": "split",                      // split (brand panel) | centered
+      "name": "Sunrise Bakery", "description": "Bread and cakes for pickup today.", "image": "/cover.jpg" }
+
+Every field is optional; colours are hex. A value the platform cannot use (a colour pair under
+4.5:1, a radius not in the list) is left out and named in the deploy's warnings — read them. The
+page never runs the app's code, so this file is the whole of what an app can change there.
 
 ## Notifications — tiny.notify
 
@@ -1159,7 +1228,7 @@ deliveries a minute per app.
 ## Reaching an app's data from a script — app keys
 
 For something outside a browser — a spreadsheet export, a Zapier step, a cron job on another
-server — make an app key (create_app_key, or the app's Keys panel). The script sends it with
+server — make an app key (create_app_key, or Secrets → Other tools in the app's settings). The script sends it with
 each request, as a bearer token in the standard header, to the app's own data API at the app's
 own address, the same endpoints the SDK uses:
 
@@ -1171,7 +1240,7 @@ and sees what a scheduled job sees: the pool in a shared app, the owner's own da
 one, the app's team space in team mode. The app's rules apply. A `read` key cannot write;
 writes made with a key have `created_by: null`. The key is shown once. Never put one in a page
 or a public repository: anyone holding it can do what it allows. The owner revokes it from the
-app's Keys panel in Tiniest Cloud.
+app's Secrets page (Other tools tab) in Tiniest Cloud.
 For another service PUSHING into an app, a webhook (above) is the better door.
 
 ## Server code — backend functions
