@@ -32,8 +32,8 @@ and Gemini CLI loads `GEMINI.md` with the extension.
 Starting from scratch in a terminal, one command makes a project already set up for Tiniest
 Cloud — React, TypeScript, Vite, Tailwind CSS and shadcn/ui for an app, or Astro for a website:
 
-    npm create tiniest-cloud@latest my-app
-    npm create tiniest-cloud@latest my-site -- --template site
+    npm create @tiniestcloud@latest my-app
+    npm create @tiniestcloud@latest my-site -- --template site
 
 ## Install
 

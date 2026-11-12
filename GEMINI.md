@@ -28,7 +28,7 @@ agent gets wrong when it treats this like ordinary web hosting:
 - **Build the frontend with the SDK.** Plain HTML, CSS and JavaScript, or a framework project:
   build it, then deploy the project folder with its `dist/` inside. `dist/` is served and the rest is
   kept as the project's source, shown in the Code tab. With a shell, a new one starts from
-  `npm create tiniest-cloud@latest <folder>` (add `-- --template site` for a website).
+  `npm create @tiniestcloud@latest <folder>` (add `-- --template site` for a website).
 - **Do not write a login flow.** Sign-in belongs to the platform. The SDK tells you who the
   visitor is; there are no passwords, sessions or tokens for the app to handle.
 - **Do not use `localStorage` for anything that matters.** It is per-browser and per-device,

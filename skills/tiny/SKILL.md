@@ -26,10 +26,13 @@ person means; call `list_apps` only when they ask what they have, or with `searc
 
 ## Starting a project
 
-With a shell to run a build in, start from a starter project:
+Every app or website starts from a starter, even when nobody asks for one. Plain HTML and
+JavaScript by hand is only for one page with a little script, or code the person brought.
 
-    npm create tiniest-cloud@latest <folder>                      # an app
-    npm create tiniest-cloud@latest <folder> -- --template site   # a website
+With a shell to run a build in:
+
+    npm create @tiniestcloud@latest <folder>                      # an app
+    npm create @tiniestcloud@latest <folder> -- --template site   # a website
 
 Then, in that folder, `npm install`, `npm run build`, and deploy the folder itself, with its
 built `dist/` inside (no node_modules, no .env files). Tiniest Cloud serves `dist/` and keeps
@@ -77,7 +80,7 @@ few builds a day (deploying output you built yourself is never limited), so chan
 need, then deploy once. When a build fails, the reply carries the build's own error; fix the
 file it names and deploy again. `get_build` shows a build still running, and in a later
 conversation `get_app_source` returns the source the live version was built from, so the app
-can keep being edited. Plain HTML, CSS and JavaScript needs no build at all.
+can keep being edited.
 
 To change a live app by sending files in the deploy call itself, send only the change:
 `deploy` with `base_version` (the live version) and just the files you edited, plus `remove`
