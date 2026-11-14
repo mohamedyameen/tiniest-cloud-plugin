@@ -39,11 +39,11 @@ phone-width column for the screens that are one task; anywhere else it reads as 
   account at the edges. The header stays pinned at the top while the page scrolls
   (`sticky top-0`, solid background).
 - **Built from components.** A screen is composed, not written out: the starter's Button,
-  Input, Card, Badge, Tabs and ToggleGroup (src/components/ui), its AppHeader, SearchField and
+  Input and Card (src/components/ui), its AppHeader, SearchField and
   FilterChips (src/components), and a component of the app's own for anything drawn more than
   once (a product card, a list row, a stat tile). Styled with Tailwind classes and the theme's
   colours on those components, never a stylesheet of `.card` and `.hero` rules. Anything
-  missing (a dialog, a select, a table, a sheet, a menu) comes from shadcn/ui
+  missing (a badge, tabs, a dialog, a select, a table, a sheet, a menu) comes from shadcn/ui
   (`npx shadcn@latest add <name>`), then takes the app's style in its own file: shadcn first,
   the app's style on top, nothing written by hand that shadcn has. The person will never ask
   for this, and every later change depends on it.
