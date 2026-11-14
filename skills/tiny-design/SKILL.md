@@ -92,6 +92,14 @@ see-through over the content) and its bottom border. Keep it short — about 56�
 on a phone, where an app's screens move to the bottom bar — so it doesn't eat the screen. A
 sidebar stays put the same way (`sticky top-0 h-svh`), and a detail pane beside a long list
 scrolls on its own.
+**Switching the theme crossfades.** Change light and dark only through the starter's
+`setTheme` (src/lib/theme.ts), never by toggling the class yourself: it fades the whole page
+from one theme to the other in 300ms and remembers the choice.
+**The header lines up with the page.** Its row sits in the same container as the content below
+(the same max width and side padding), so the logo starts on the page's left edge and the last
+action ends on its right. Logo, navigation and actions share one line, centred vertically. Icon
+buttons keep their size at every width (`shrink-0`, a fixed square): at a tablet's width
+(640–1024px) the navigation drops its labels or folds into a menu before anything squeezes.
 A website's header may shrink as you scroll, but stays reachable. A long list's search and
 filters stick just below the header the same way, so people can search without scrolling back
 up — on a phone, at least the search. Measure the header (a `ResizeObserver` writing
@@ -317,6 +325,10 @@ apps never come out the same. Every font here is on npm as `@fontsource/<name>` 
   every other bottom bar above it; a detail screen keeps its way back and its actions pinned.
 - The header stays at the top while the page scrolls, on a laptop and a phone, with a solid
   background; a long list's search (and filters, where there's room) stays pinned under it.
+- The header's logo and last action line up with the page's edges, and nothing in it squeezes
+  at a tablet's width (768px).
+- Screens are built from components (the starter's and the app's own), with no bare
+  `<button>` or `<input>` and no hand-written stylesheet for them.
 - No control the browser draws: dates use the calendar, dropdowns the select, hints the tooltip,
   questions a dialog — all styled to the theme.
 - None of the giveaways (the design guide's "What gives generated UI away").

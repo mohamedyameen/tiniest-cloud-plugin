@@ -59,6 +59,8 @@ Where files go in an app, so every project reads the same way in the build view'
     src/lib/          plain code: helpers, formatting, types (types.ts), calculations
     public/           files served as they are, plus _functions/, tiny.rules.json, tiny.brand.json
 
+A first build with its screens anywhere but src/pages (all in App.tsx, say) is refused.
+
 A file past about 300 lines is doing too much: move its parts into components and hooks. A
 website keeps Astro's own layout the same way: src/pages, src/layouts, src/components.
 
@@ -184,6 +186,14 @@ see-through over the content) and its bottom border. Keep it short — about 56�
 on a phone, where an app's screens move to the bottom bar — so it doesn't eat the screen. A
 sidebar stays put the same way (`sticky top-0 h-svh`), and a detail pane beside a long list
 scrolls on its own.
+**Switching the theme crossfades.** Change light and dark only through the starter's
+`setTheme` (src/lib/theme.ts), never by toggling the class yourself: it fades the whole page
+from one theme to the other in 300ms and remembers the choice.
+**The header lines up with the page.** Its row sits in the same container as the content below
+(the same max width and side padding), so the logo starts on the page's left edge and the last
+action ends on its right. Logo, navigation and actions share one line, centred vertically. Icon
+buttons keep their size at every width (`shrink-0`, a fixed square): at a tablet's width
+(640–1024px) the navigation drops its labels or folds into a menu before anything squeezes.
 A website's header may shrink as you scroll, but stays reachable. A long list's search and
 filters stick just below the header the same way, so people can search without scrolling back
 up — on a phone, at least the search. Measure the header (a `ResizeObserver` writing
@@ -835,12 +845,12 @@ Use the paths exactly as shown (the app starter already has them). To customise,
 `icon-512.png` / `apple-touch-icon.png` (picked up automatically), or a root
 `manifest.webmanifest` / `sw.js` to replace the generated ones — keep `start_url` and
 `scope` as `"."`. Unlike the rest of the app, the manifest and icons are served publicly.
-If this connection lists `set_icon`, give every new app an icon with it after its first deploy: a Remix Icon glyph for
-what the app is for (`wallet-3` for a budget tracker, `question-answer` for a quiz) and the
-app's main UI colour as a hex, so the icon matches the app. It shows in browser tabs, on home
-screens and on the dashboard, and replaces any shipped `icon-*.png`, `apple-touch-icon.png`
-and `favicon.ico`. An icon the owner picked on the app's Icon page stays unless they ask for a
-new one. Leave `<link rel="icon">` out of your HTML — it would decide the tab instead.
+Give every app an icon: draw its mark (the logo in its header) as `public/icon.svg`, square,
+on its own background colour and still clear at 32px. Tiniest Cloud makes it the app's icon in
+the browser tab, on home screens, on its sign-in page and in the dashboard; a later deploy with a
+changed file updates it. With no mark to draw and `set_icon` in this connection, set a Remix
+Icon glyph instead (`wallet-3` for a budget tracker) in the app's main colour. An icon the
+owner picked on the app's Icon page stays unless they ask for a new one.
 
 ## After deploying: how to check your work
 
@@ -870,6 +880,10 @@ Whether or not you can, these are worth doing:
 - `write_app_data`, if your connection has it — put a row in and then read it back, to
   prove the app renders what is there before anyone has typed anything.
 - `list_versions` — confirm the deploy landed and which version is live.
+
+**Review it yourself before saying it is ready**: no AI reviews your code here. Check the rules
+cover every write, no key is in the page, and failed `tiny.*` calls show a message. Browser
+errors come back in your next deploy reply: fix those first.
 
 Then ask the person to open the link, and tell them EXACTLY what to look for and what
 would count as broken:
