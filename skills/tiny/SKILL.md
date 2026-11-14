@@ -845,8 +845,8 @@ Use the paths exactly as shown (the app starter already has them). To customise,
 `icon-512.png` / `apple-touch-icon.png` (picked up automatically), or a root
 `manifest.webmanifest` / `sw.js` to replace the generated ones — keep `start_url` and
 `scope` as `"."`. Unlike the rest of the app, the manifest and icons are served publicly.
-Give every app an icon: draw its mark (the logo in its header) as `public/icon.svg`, square,
-on its own background colour and still clear at 32px. Tiniest Cloud makes it the app's icon in
+Give every app an icon: draw its logo once as `public/icon.svg`, square, on its own background
+colour and still clear at 32px, and show that same file as the header's logo. Tiniest Cloud makes it the app's icon in
 the browser tab, on home screens, on its sign-in page and in the dashboard; a later deploy with a
 changed file updates it. With no mark to draw and `set_icon` in this connection, set a Remix
 Icon glyph instead (`wallet-3` for a budget tracker) in the app's main colour. An icon the
